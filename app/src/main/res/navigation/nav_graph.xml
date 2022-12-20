@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_search">
         <action
-            android:id="@+id/action_SearchFragment_to_SearchResultFragment"
+            android:id="@+id/action_search_fragment_to_search_result_fragment"
             app:destination="@id/searchResultFragment" />
     </fragment>
 
