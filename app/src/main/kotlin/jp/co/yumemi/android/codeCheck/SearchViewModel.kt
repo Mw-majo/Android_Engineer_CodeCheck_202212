@@ -25,7 +25,7 @@ import java.util.*
 class SearchViewModel(val context: Context) : ViewModel() {
 
     // 検索結果
-    fun searchResults(inputText: String): List<item> = runBlocking {
+    fun getSearchResults(inputText: String): List<Item> = runBlocking {
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
@@ -39,7 +39,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
 
             val jsonItems = jsonBody.optJSONArray("items")!!
 
-            val items = mutableListOf<item>()
+            val items = mutableListOf<Item>()
 
             /**
              * アイテムの個数分ループする
@@ -55,7 +55,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
                 val openIssuesCount = jsonItem.optLong("open_issues_count")
 
                 items.add(
-                    item(
+                    Item(
                         name = name,
                         ownerIconUrl = ownerIconUrl,
                         language = context.getString(R.string.written_language, language),
@@ -75,7 +75,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
 }
 
 @Parcelize
-data class item(
+data class Item(
     val name: String,
     val ownerIconUrl: String,
     val language: String,
