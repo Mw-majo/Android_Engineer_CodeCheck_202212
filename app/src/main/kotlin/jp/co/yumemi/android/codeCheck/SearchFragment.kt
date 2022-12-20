@@ -27,16 +27,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         val dividerItemDecoration =
             DividerItemDecoration(context!!, linearLayoutManager.orientation)
         val customAdapter = CustomAdapter(object : CustomAdapter.OnItemClickListener {
-            override fun itemClick(item: item) {
-                gotoRepositoryFragment(item)
+            override fun itemClick(item: Item) {
+                transitionSearchResultFragment(item)
             }
         })
 
-        fragmentSearchBinding.queryEditField
-            .setOnEditorActionListener { editText, action, _ ->
+        fragmentSearchBinding.queryEditField.setOnEditorActionListener { editText, action, _ ->
                 if (action == EditorInfo.IME_ACTION_SEARCH) {
                     editText.text.toString().let {
-                        searchViewModel.searchResults(it).apply {
+                        searchViewModel.getSearchResults(it).apply {
                             customAdapter.submitList(this)
                         }
                     }
@@ -52,19 +51,19 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    fun gotoRepositoryFragment(item: item) {
+    fun transitionSearchResultFragment(item: Item) {
         val directions = SearchFragmentDirections
-            .actionRepositoriesFragmentToRepositoryFragment(item = item)
+            .actionSearchFragmentToSearchResultFragment(item)
         findNavController().navigate(directions)
     }
 }
 
-val diff_util = object : DiffUtil.ItemCallback<item>() {
-    override fun areItemsTheSame(oldItem: item, newItem: item): Boolean {
+val diff_util = object : DiffUtil.ItemCallback<Item>() {
+    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
         return oldItem.name == newItem.name
     }
 
-    override fun areContentsTheSame(oldItem: item, newItem: item): Boolean {
+    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
         return oldItem == newItem
     }
 
@@ -72,24 +71,24 @@ val diff_util = object : DiffUtil.ItemCallback<item>() {
 
 class CustomAdapter(
     private val itemClickListener: OnItemClickListener,
-) : ListAdapter<item, CustomAdapter.ViewHolder>(diff_util) {
+) : ListAdapter<Item, CustomAdapter.ViewHolder>(diff_util) {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     interface OnItemClickListener {
-        fun itemClick(item: item)
+        fun itemClick(item: Item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
+        val view = LayoutInflater
+            .from(parent.context)
             .inflate(R.layout.layout_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        (holder.itemView.findViewById<View>(R.id.repository_name_view) as TextView).text =
-            item.name
+        (holder.itemView.findViewById<View>(R.id.repository_name_view) as TextView).text = item.name
 
         holder.itemView.setOnClickListener {
             itemClickListener.itemClick(item)
