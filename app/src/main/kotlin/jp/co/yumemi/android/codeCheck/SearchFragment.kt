@@ -36,7 +36,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             .setOnEditorActionListener { editText, action, _ ->
                 if (action == EditorInfo.IME_ACTION_SEARCH) {
                     editText.text.toString().let {
-                        searchViewModel.searchResults(it).apply {
+                        searchViewModel.getSearchResults(it).apply {
                             customAdapter.submitList(this)
                         }
                     }
