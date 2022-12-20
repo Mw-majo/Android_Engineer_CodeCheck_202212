@@ -19,25 +19,25 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val _binding = FragmentSearchBinding.bind(view)
+        val fragmentSearchBinding = FragmentSearchBinding.bind(view)
 
-        val _viewModel = SearchViewModel(context!!)
+        val searchViewModel = SearchViewModel(context!!)
 
-        val _layoutManager = LinearLayoutManager(context!!)
-        val _dividerItemDecoration =
-            DividerItemDecoration(context!!, _layoutManager.orientation)
-        val _adapter = CustomAdapter(object : CustomAdapter.OnItemClickListener {
+        val linearLayoutManager = LinearLayoutManager(context!!)
+        val dividerItemDecoration =
+            DividerItemDecoration(context!!, linearLayoutManager.orientation)
+        val customAdapter = CustomAdapter(object : CustomAdapter.OnItemClickListener {
             override fun itemClick(item: item) {
                 gotoRepositoryFragment(item)
             }
         })
 
-        _binding.queryEditField
+        fragmentSearchBinding.queryEditField
             .setOnEditorActionListener { editText, action, _ ->
                 if (action == EditorInfo.IME_ACTION_SEARCH) {
                     editText.text.toString().let {
-                        _viewModel.searchResults(it).apply {
-                            _adapter.submitList(this)
+                        searchViewModel.searchResults(it).apply {
+                            customAdapter.submitList(this)
                         }
                     }
                     return@setOnEditorActionListener true
@@ -45,17 +45,17 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 return@setOnEditorActionListener false
             }
 
-        _binding.recyclerView.also {
-            it.layoutManager = _layoutManager
-            it.addItemDecoration(_dividerItemDecoration)
-            it.adapter = _adapter
+        fragmentSearchBinding.recyclerView.also {
+            it.layoutManager = linearLayoutManager
+            it.addItemDecoration(dividerItemDecoration)
+            it.adapter = customAdapter
         }
     }
 
     fun gotoRepositoryFragment(item: item) {
-        val _action = SearchFragmentDirections
+        val directions = SearchFragmentDirections
             .actionRepositoriesFragmentToRepositoryFragment(item = item)
-        findNavController().navigate(_action)
+        findNavController().navigate(directions)
     }
 }
 
@@ -81,18 +81,18 @@ class CustomAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val _view = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_item, parent, false)
-        return ViewHolder(_view)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val _item = getItem(position)
+        val item = getItem(position)
         (holder.itemView.findViewById<View>(R.id.repository_name_view) as TextView).text =
-            _item.name
+            item.name
 
         holder.itemView.setOnClickListener {
-            itemClickListener.itemClick(_item)
+            itemClickListener.itemClick(item)
         }
     }
 }
