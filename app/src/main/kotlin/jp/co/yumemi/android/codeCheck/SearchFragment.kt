@@ -28,7 +28,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             DividerItemDecoration(context!!, linearLayoutManager.orientation)
         val customAdapter = CustomAdapter(object : CustomAdapter.OnItemClickListener {
             override fun itemClick(item: Item) {
-                gotoRepositoryFragment(item)
+                transitionSearchResultFragment(item)
             }
         })
 
@@ -52,7 +52,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    fun gotoRepositoryFragment(item: Item) {
+    fun transitionSearchResultFragment(item: Item) {
         val directions = SearchFragmentDirections
             .actionSearchFragmentToSearchResultFragment(item)
         findNavController().navigate(directions)
