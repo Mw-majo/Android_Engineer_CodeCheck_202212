@@ -32,8 +32,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
         })
 
-        fragmentSearchBinding.queryEditField
-            .setOnEditorActionListener { editText, action, _ ->
+        fragmentSearchBinding.queryEditField.setOnEditorActionListener { editText, action, _ ->
                 if (action == EditorInfo.IME_ACTION_SEARCH) {
                     editText.text.toString().let {
                         searchViewModel.searchResults(it).apply {
@@ -53,8 +52,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     fun gotoRepositoryFragment(item: item) {
-        val directions = SearchFragmentDirections
-            .actionRepositoriesFragmentToRepositoryFragment(item = item)
+        val directions =
+            SearchFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(item = item)
         findNavController().navigate(directions)
     }
 }
@@ -81,15 +80,15 @@ class CustomAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
+        val view = LayoutInflater
+            .from(parent.context)
             .inflate(R.layout.layout_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        (holder.itemView.findViewById<View>(R.id.repository_name_view) as TextView).text =
-            item.name
+        (holder.itemView.findViewById<View>(R.id.repository_name_view) as TextView).text = item.name
 
         holder.itemView.setOnClickListener {
             itemClickListener.itemClick(item)
