@@ -32,7 +32,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
         })
 
-        _binding.searchInputText
+        _binding.queryEditField
             .setOnEditorActionListener { editText, action, _ ->
                 if (action == EditorInfo.IME_ACTION_SEARCH) {
                     editText.text.toString().let {
