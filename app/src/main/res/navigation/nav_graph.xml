@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_search_result">
         <argument
             android:name="item"
-            app:argType="jp.co.yumemi.android.codeCheck.item" />
+            app:argType="jp.co.yumemi.android.codeCheck.Item" />
     </fragment>
 
 </navigation>
