@@ -1,7 +1,7 @@
 /*
  * Copyright © 2021 YUMEMI Inc. All rights reserved.
  */
-package jp.co.yumemi.android.code_check
+package jp.co.yumemi.android.codeCheck
 
 import android.content.Context
 import android.os.Parcelable
@@ -11,7 +11,7 @@ import io.ktor.client.call.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
+import jp.co.yumemi.android.codeCheck.SearchActivity.Companion.lastSearchDate
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -22,7 +22,7 @@ import java.util.*
 /**
  * TwoFragment で使う
  */
-class OneViewModel(
+class SearchViewModel(
     val context: Context
 ) : ViewModel() {
 
@@ -52,7 +52,7 @@ class OneViewModel(
                 val language = jsonItem.optString("language")
                 val stargazersCount = jsonItem.optLong("stargazers_count")
                 val watchersCount = jsonItem.optLong("watchers_count")
-                val forksCount = jsonItem.optLong("forks_conut")
+                val forksCount = jsonItem.optLong("forks_count")
                 val openIssuesCount = jsonItem.optLong("open_issues_count")
 
                 items.add(
