@@ -27,6 +27,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
+
             val response: HttpResponse =
                 client?.get("https://api.github.com/search/repositories") {
                     header("Accept", "application/vnd.github.v3+json")
