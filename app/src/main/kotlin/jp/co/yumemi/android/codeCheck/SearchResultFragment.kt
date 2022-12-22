@@ -26,7 +26,7 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
 
         _binding = FragmentSearchResultBinding.bind(view)
 
-        var item = args.item
+        val item = args.item
 
         binding.ownerIconView.load(item.ownerIconUrl);
         binding.nameView.text = item.name;
