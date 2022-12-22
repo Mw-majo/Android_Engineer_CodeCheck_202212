@@ -23,6 +23,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
 
     // 検索結果
     fun getSearchResults(inputText: String): List<Item> = runBlocking {
+
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
@@ -33,9 +34,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
                 }
 
             val jsonBody = JSONObject(response.receive<String>())
-
             val jsonItems = jsonBody.optJSONArray("items")!!
-
             val items = mutableListOf<Item>()
 
             for (i in 0 until jsonItems.length()) {

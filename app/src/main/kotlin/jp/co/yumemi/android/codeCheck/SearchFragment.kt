@@ -20,30 +20,30 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         super.onViewCreated(view, savedInstanceState)
 
         val fragmentSearchBinding = FragmentSearchBinding.bind(view)
-
         val searchViewModel = SearchViewModel(context!!)
-
         val linearLayoutManager = LinearLayoutManager(context!!)
         val dividerItemDecoration =
             DividerItemDecoration(context!!, linearLayoutManager.orientation)
-        val customAdapter = CustomAdapter(object : CustomAdapter.OnItemClickListener {
-            override fun itemClick(item: Item) {
-                transitionSearchResultFragment(item)
+        val customAdapter = CustomAdapter(
+            object : CustomAdapter.OnItemClickListener {
+                override fun itemClick(item: Item) {
+                    transitionSearchResultFragment(item)
+                }
             }
-        })
+        )
 
         fragmentSearchBinding.queryEditField.setOnEditorActionListener { editText, action, _ ->
-                if (action != EditorInfo.IME_ACTION_SEARCH) {
-                    return@setOnEditorActionListener false
-                }
-
-                editText.text.toString().let {
-                    searchViewModel.getSearchResults(it).apply {
-                        customAdapter.submitList(this)
-                    }
-                }
-                return@setOnEditorActionListener true
+            if (action != EditorInfo.IME_ACTION_SEARCH) {
+                return@setOnEditorActionListener false
             }
+            
+            editText.text.toString().let {
+                searchViewModel.getSearchResults(it).apply {
+                    customAdapter.submitList(this)
+                }
+            }
+            return@setOnEditorActionListener true
+        }
 
         fragmentSearchBinding.recyclerView.also {
             it.layoutManager = linearLayoutManager
@@ -53,8 +53,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     fun transitionSearchResultFragment(item: Item) {
-        val directions = SearchFragmentDirections
-            .actionSearchFragmentToSearchResultFragment(item)
+        val directions = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(item)
         findNavController().navigate(directions)
     }
 }
@@ -67,7 +66,6 @@ val diff_util = object : DiffUtil.ItemCallback<Item>() {
     override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
         return oldItem == newItem
     }
-
 }
 
 class CustomAdapter(
@@ -90,7 +88,6 @@ class CustomAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         (holder.itemView.findViewById<View>(R.id.repository_name_view) as TextView).text = item.name
-
         holder.itemView.setOnClickListener {
             itemClickListener.itemClick(item)
         }
