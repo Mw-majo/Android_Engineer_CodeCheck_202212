@@ -24,7 +24,7 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
 
         Log.d("検索した日時", lastSearchDate.toString())
 
-        var item = args.item
+        val item = args.item
         _binding = FragmentSearchResultBinding.bind(view)
         binding.ownerIconView.load(item.ownerIconUrl);
         binding.nameView.text = item.name;
