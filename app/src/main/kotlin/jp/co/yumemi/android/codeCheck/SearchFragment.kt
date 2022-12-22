@@ -33,15 +33,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         )
 
         fragmentSearchBinding.queryEditField.setOnEditorActionListener { editText, action, _ ->
-            if (action == EditorInfo.IME_ACTION_SEARCH) {
-                editText.text.toString().let {
-                    searchViewModel.getSearchResults(it).apply {
-                        customAdapter.submitList(this)
-                    }
-                }
-                return@setOnEditorActionListener true
+            if (action != EditorInfo.IME_ACTION_SEARCH) {
+                return@setOnEditorActionListener false
             }
-            return@setOnEditorActionListener false
+            
+            editText.text.toString().let {
+                searchViewModel.getSearchResults(it).apply {
+                    customAdapter.submitList(this)
+                }
+            }
+            return@setOnEditorActionListener true
         }
 
         fragmentSearchBinding.recyclerView.also {
@@ -52,8 +53,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     fun transitionSearchResultFragment(item: Item) {
-        val directions = SearchFragmentDirections
-            .actionSearchFragmentToSearchResultFragment(item)
+        val directions = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(item)
         findNavController().navigate(directions)
     }
 }
