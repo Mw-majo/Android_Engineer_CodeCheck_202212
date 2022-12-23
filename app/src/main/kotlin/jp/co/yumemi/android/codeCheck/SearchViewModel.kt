@@ -41,7 +41,8 @@ class SearchViewModel(val context: Context) : ViewModel() {
             for (i in 0 until jsonItems.length()) {
                 val jsonItem = jsonItems.optJSONObject(i) ?: break
                 val name = jsonItem.optString("full_name")
-                val ownerIconUrl = jsonItem.optJSONObject("owner")!!.optString("avatar_url")
+                val ownerIconUrl =
+                    jsonItem.optJSONObject("owner")?.optString("avatar_url") ?: continue
                 val language = jsonItem.optString("language")
                 val stargazersCount = jsonItem.optLong("stargazers_count")
                 val watchersCount = jsonItem.optLong("watchers_count")
