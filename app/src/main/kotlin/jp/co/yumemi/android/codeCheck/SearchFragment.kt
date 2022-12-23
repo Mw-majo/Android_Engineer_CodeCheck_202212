@@ -20,10 +20,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         super.onViewCreated(view, savedInstanceState)
 
         val fragmentSearchBinding = FragmentSearchBinding.bind(view)
-        val searchViewModel = SearchViewModel(context!!)
-        val linearLayoutManager = LinearLayoutManager(context!!)
+        val searchViewModel = SearchViewModel(requireContext())
+        val linearLayoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration =
-            DividerItemDecoration(context!!, linearLayoutManager.orientation)
+            DividerItemDecoration(requireContext(), linearLayoutManager.orientation)
         val customAdapter = CustomAdapter(
             object : CustomAdapter.OnItemClickListener {
                 override fun itemClick(item: Item) {
@@ -36,7 +36,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             if (action != EditorInfo.IME_ACTION_SEARCH) {
                 return@setOnEditorActionListener false
             }
-            
+
             editText.text.toString().let {
                 searchViewModel.getSearchResults(it).apply {
                     customAdapter.submitList(this)
