@@ -35,7 +35,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
                 }
 
             val jsonBody = JSONObject(response.receive<String>())
-            val jsonItems = jsonBody.optJSONArray("items")!!
+            val jsonItems = jsonBody.optJSONArray("items") ?: return@async listOf()
             val items = mutableListOf<Item>()
 
             for (i in 0 until jsonItems.length()) {
