@@ -27,6 +27,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
+
             val response: HttpResponse =
                 client?.get("https://api.github.com/search/repositories") {
                     header("Accept", "application/vnd.github.v3+json")
@@ -34,13 +35,14 @@ class SearchViewModel(val context: Context) : ViewModel() {
                 }
 
             val jsonBody = JSONObject(response.receive<String>())
-            val jsonItems = jsonBody.optJSONArray("items")!!
+            val jsonItems = jsonBody.optJSONArray("items") ?: return@async listOf()
             val items = mutableListOf<Item>()
 
             for (i in 0 until jsonItems.length()) {
-                val jsonItem = jsonItems.optJSONObject(i)!!
+                val jsonItem = jsonItems.optJSONObject(i) ?: break
                 val name = jsonItem.optString("full_name")
-                val ownerIconUrl = jsonItem.optJSONObject("owner")!!.optString("avatar_url")
+                val ownerIconUrl =
+                    jsonItem.optJSONObject("owner")?.optString("avatar_url") ?: continue
                 val language = jsonItem.optString("language")
                 val stargazersCount = jsonItem.optLong("stargazers_count")
                 val watchersCount = jsonItem.optLong("watchers_count")
