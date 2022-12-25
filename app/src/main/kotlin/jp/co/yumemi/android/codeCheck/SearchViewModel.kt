@@ -18,7 +18,7 @@ import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.util.*
 
-class SearchViewModel() : ViewModel() {
+class SearchViewModel : ViewModel() {
 
     private var _lastSearchDate = Date()
     val lastSearchDate get() = _lastSearchDate
