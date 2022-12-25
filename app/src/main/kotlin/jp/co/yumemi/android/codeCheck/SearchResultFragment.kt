@@ -12,6 +12,10 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import jp.co.yumemi.android.codeCheck.databinding.FragmentSearchResultBinding
 
+/**
+ * レポジトリの詳細を表示するFragment
+ * SearchFragmentで選択されたレポジトリの詳細が表示される
+ */
 class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
 
     private val args: SearchResultFragmentArgs by navArgs()
@@ -25,6 +29,7 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
         val searchViewModel: SearchViewModel by activityViewModels()
         Log.d("検索した日時", searchViewModel.lastSearchDate.toString())
 
+        // viewに表示されるレポジトリの詳細を設定
         val item = args.item
         _binding = FragmentSearchResultBinding.bind(view)
         binding.ownerIconView.load(item.ownerIconUrl)

@@ -13,13 +13,19 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import jp.co.yumemi.android.codeCheck.databinding.FragmentSearchBinding
 
+/**
+ * 検索窓を提供するFragment
+ * 検索結果のレポジトリ名の一覧が表示される
+ * レポジトリを選択するとSearchResultFragmentに遷移し、選択したレポジトリの詳細が表示される
+ */
 class SearchFragment : Fragment(R.layout.fragment_search) {
+
+    val searchViewModel: SearchViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val fragmentSearchBinding = FragmentSearchBinding.bind(view)
-        val searchViewModel: SearchViewModel by activityViewModels()
         val linearLayoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), linearLayoutManager.orientation)
@@ -33,7 +39,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
         )
 
-        // 入力を監視するリスナーを定義
+        // 検索窓への入力を監視するリスナーを作成
         fragmentSearchBinding.queryEditField.addTextChangedListener(
             object : OnTextWatcher {
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -45,6 +51,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
         )
 
+        // recyclerViewを用いて、レポジトリ名の一覧を表示するbindを作成
         fragmentSearchBinding.recyclerView.also {
             it.layoutManager = linearLayoutManager
             it.addItemDecoration(dividerItemDecoration)
