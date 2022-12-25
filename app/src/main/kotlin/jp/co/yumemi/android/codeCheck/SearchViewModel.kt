@@ -11,6 +11,9 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.util.*
@@ -20,9 +23,11 @@ import java.util.*
  */
 class SearchViewModel : ViewModel() {
 
-    // TODO: lastSearchDateをモデルとして保存、およびlastSearchDateを取得する関数の定義
-    private var _lastSearchDate = Date()
-    val lastSearchDate get() = _lastSearchDate
+    // SearchDateModelからlastSearchDateを取得し、viewに渡せるようにしている
+    private val _searchDateModel = MutableStateFlow(SearchDateModel())
+    private val searchDateModel = _searchDateModel.asStateFlow()
+    val lastSearchDate: String
+        get() = searchDateModel.value.lastSearchDate.toString()
 
     // 検索を行い、レポジトリ名のリストを取得する
     fun getSearchResults(inputText: String): List<Item> = runBlocking {
@@ -69,7 +74,9 @@ class SearchViewModel : ViewModel() {
             }
 
             // 現在時刻を保存
-            _lastSearchDate = Date()
+            _searchDateModel.update { currentState ->
+                currentState.copy(lastSearchDate = Date())
+            }
 
             return@async items.toList()
         }.await()
