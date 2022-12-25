@@ -3,6 +3,7 @@
  */
 package jp.co.yumemi.android.codeCheck
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.ktor.client.*
@@ -34,9 +35,7 @@ class SearchViewModel : ViewModel() {
 
     // SearchResultModelからレポジトリ名のリストを取得する
     private val _searchResultModel = MutableStateFlow(SearchResultModel())
-    private val searchResultModel = _searchResultModel.asStateFlow()
-    val searchingRepositories: List<Item>
-        get() = searchResultModel.value.repositoryList
+    val searchResultModel = _searchResultModel.asStateFlow()
 
     // githubAPIサーバにリクエストを送り検索結果を得る
     fun requestSearchingRepositories(inputText: String) {

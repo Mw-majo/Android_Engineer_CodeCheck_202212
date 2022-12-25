@@ -6,5 +6,5 @@ import java.util.*
  * lastSearchDateを保持するデータクラス
  */
 data class SearchDateModel (
-    val lastSearchDate: Date? = null,
+    var lastSearchDate: Date? = null,
 )
