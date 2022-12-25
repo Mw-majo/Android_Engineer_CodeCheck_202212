@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
 import jp.co.yumemi.android.codeCheck.databinding.FragmentSearchResultBinding
@@ -21,7 +22,7 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val searchViewModel = SearchViewModel()
+        val searchViewModel: SearchViewModel by activityViewModels()
         Log.d("検索した日時", searchViewModel.lastSearchDate.toString())
 
         val item = args.item
