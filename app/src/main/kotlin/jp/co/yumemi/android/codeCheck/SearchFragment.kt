@@ -20,12 +20,11 @@ import jp.co.yumemi.android.codeCheck.databinding.FragmentSearchBinding
  */
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
-    val searchViewModel: SearchViewModel by activityViewModels()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val fragmentSearchBinding = FragmentSearchBinding.bind(view)
+        val searchViewModel: SearchViewModel by activityViewModels()
         val linearLayoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), linearLayoutManager.orientation)
@@ -44,9 +43,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             object : OnTextWatcher {
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     val keyword = p1.toString()
-                    searchViewModel.getSearchResults(keyword).apply {
-                        customAdapter.submitList(this)
-                    }
+                    searchViewModel.requestSearchingRepositories(keyword)
+                    customAdapter.submitList(searchViewModel.searchingRepositories)
                 }
             }
         )
