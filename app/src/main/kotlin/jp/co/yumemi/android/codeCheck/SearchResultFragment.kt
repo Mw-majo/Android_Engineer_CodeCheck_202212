@@ -20,9 +20,6 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
     private var _binding: FragmentSearchResultBinding? = null
     private val binding get() = _binding!!
 
-    //private val viewModel: SearchViewModel by viewModels()
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -34,9 +31,9 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
         binding.ownerIconView.load(item.ownerIconUrl)
         binding.nameView.text = item.name
         binding.languageView.text = item.language
-        binding.starsView.text = "${item.stargazersCount} stars"
-        binding.watchersView.text = "${item.watchersCount} watchers"
-        binding.forksView.text = "${item.forksCount} forks"
-        binding.openIssuesView.text = "${item.openIssuesCount} open issues"
+        binding.starsView.text = getString(R.string.stars_text, item.stargazersCount)
+        binding.watchersView.text = getString(R.string.watchers_text, item.watchersCount)
+        binding.forksView.text = getString(R.string.forks_text, item.forksCount)
+        binding.openIssuesView.text = getString(R.string.open_issues_text, item.openIssuesCount)
     }
 }
