@@ -3,7 +3,6 @@
  */
 package jp.co.yumemi.android.codeCheck
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.ktor.client.*
@@ -11,13 +10,10 @@ import io.ktor.client.call.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -29,9 +25,7 @@ class SearchViewModel : ViewModel() {
 
     // SearchDateModelからlastSearchDateを取得
     private val _searchDateModel = MutableStateFlow(SearchDateModel())
-    private val searchDateModel = _searchDateModel.asStateFlow()
-    val lastSearchDate: String
-        get() = searchDateModel.value.lastSearchDate.toString()
+    val searchDateModel = _searchDateModel.asStateFlow()
 
     // SearchResultModelからレポジトリ名のリストを取得する
     private val _searchResultModel = MutableStateFlow(SearchResultModel())

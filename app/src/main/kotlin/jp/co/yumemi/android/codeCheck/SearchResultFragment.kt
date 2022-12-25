@@ -8,9 +8,12 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import coil.load
 import jp.co.yumemi.android.codeCheck.databinding.FragmentSearchResultBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /**
  * レポジトリの詳細を表示するFragment
@@ -27,7 +30,11 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
         super.onViewCreated(view, savedInstanceState)
 
         val searchViewModel: SearchViewModel by activityViewModels()
-        Log.d("検索した日時", searchViewModel.lastSearchDate)
+        viewLifecycleOwner.lifecycleScope.launch {
+            searchViewModel.searchDateModel.collect {
+                Log.d("検索した日時", it.lastSearchDate.toString())
+            }
+        }
 
         // viewに表示されるレポジトリの詳細を設定
         val item = args.item
