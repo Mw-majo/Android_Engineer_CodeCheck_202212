@@ -15,24 +15,31 @@ import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.util.*
 
+/**
+ * 検索にかかわるViewModel
+ */
 class SearchViewModel : ViewModel() {
 
+    // TODO: lastSearchDateをモデルとして保存、およびlastSearchDateを取得する関数の定義
     private var _lastSearchDate = Date()
     val lastSearchDate get() = _lastSearchDate
 
-    // 検索結果
+    // 検索を行い、レポジトリ名のリストを取得する
     fun getSearchResults(inputText: String): List<Item> = runBlocking {
 
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
 
+            // リクエストを行いレスポンスを得る
             val response: HttpResponse =
                 client.get("https://api.github.com/search/repositories") {
                     header("Accept", "application/vnd.github.v3+json")
                     parameter("q", inputText)
                 }
 
+            // JSONからデータを取得する
+            // TODO: データをモデルとして保存し、そのデータを取得する関数を作成
             val jsonBody = JSONObject(response.receive<String>())
             val jsonItems = jsonBody.optJSONArray("items") ?: return@async listOf()
             val items = mutableListOf<Item>()
@@ -61,6 +68,7 @@ class SearchViewModel : ViewModel() {
                 )
             }
 
+            // 現在時刻を保存
             _lastSearchDate = Date()
 
             return@async items.toList()

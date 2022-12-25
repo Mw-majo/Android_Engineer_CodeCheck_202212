@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
+
+// Item間の差分を調べる
 val diff_util = object : DiffUtil.ItemCallback<Item>() {
+
     override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
         return oldItem.name == newItem.name
     }
@@ -18,6 +21,9 @@ val diff_util = object : DiffUtil.ItemCallback<Item>() {
     }
 }
 
+/**
+ * Item(レポジトリのデータ)をrecyclerViewなどで表示させるためのListAdapterにクリックリスナを追加したクラス
+ */
 class CustomAdapter(
     private val itemClickListener: OnItemClickListener,
 ) : ListAdapter<Item, CustomAdapter.ViewHolder>(diff_util) {
