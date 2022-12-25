@@ -70,14 +70,3 @@ class SearchViewModel : ViewModel() {
         }.await()
     }
 }
-
-@Parcelize
-data class Item(
-    val name: String,
-    val ownerIconUrl: String,
-    val language: String,
-    val stargazersCount: Long,
-    val watchersCount: Long,
-    val forksCount: Long,
-    val openIssuesCount: Long,
-) : Parcelable
