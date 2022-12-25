@@ -5,13 +5,15 @@ package jp.co.yumemi.android.codeCheck
 
 import android.content.Context
 import android.os.Parcelable
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import jp.co.yumemi.android.codeCheck.SearchActivity.Companion.lastSearchDate
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -20,6 +22,9 @@ import org.json.JSONObject
 import java.util.*
 
 class SearchViewModel(val context: Context) : ViewModel() {
+
+    private var _lastSearchDate = Date()
+    val lastSearchDate get() = _lastSearchDate
 
     // 検索結果
     fun getSearchResults(inputText: String): List<Item> = runBlocking {
@@ -62,7 +67,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
                 )
             }
 
-            lastSearchDate = Date()
+            _lastSearchDate = Date()
 
             return@async items.toList()
         }.await()
