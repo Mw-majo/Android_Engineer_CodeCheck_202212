@@ -32,15 +32,18 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
         )
 
+        // 入力を監視するリスナーを定義
         fragmentSearchBinding.queryEditField.setOnEditorActionListener { editText, action, _ ->
-            if (action != EditorInfo.IME_ACTION_SEARCH) {
+
+            val keyword = editText.text.toString()
+
+            // 入力がないか、ボタンが押されていなければ検索を行わない
+            if (action != EditorInfo.IME_ACTION_SEARCH || keyword == "") {
                 return@setOnEditorActionListener false
             }
 
-            editText.text.toString().let {
-                searchViewModel.getSearchResults(it).apply {
-                    customAdapter.submitList(this)
-                }
+            searchViewModel.getSearchResults(keyword).apply {
+                customAdapter.submitList(this)
             }
             return@setOnEditorActionListener true
         }
