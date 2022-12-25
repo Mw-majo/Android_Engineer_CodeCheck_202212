@@ -26,7 +26,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         val customAdapter = CustomAdapter(
             object : CustomAdapter.OnItemClickListener {
                 override fun itemClick(item: Item) {
-                    transitionSearchResultFragment(item)
+                    val directions =
+                        SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(item)
+                    findNavController().navigate(directions)
                 }
             }
         )
@@ -54,8 +56,4 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    fun transitionSearchResultFragment(item: Item) {
-        val directions = SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(item)
-        findNavController().navigate(directions)
-    }
 }
