@@ -6,4 +6,10 @@
     <string name="watchers_text">%1$d watchers</string>
     <string name="forks_text">%1$d forks</string>
     <string name="open_issues_text">%1$d open issues</string>
+    <string name="default_repository_name">JetBrains/kotlin</string>
+    <string name="default_written_language">Written in Kotlin</string>
+    <string name="default_stars">38530 stars</string>
+    <string name="default_watchers">38530 watchers</string>
+    <string name="default_forks">34675 forks</string>
+    <string name="default_open_issues">131 open issues</string>
 </resources>
