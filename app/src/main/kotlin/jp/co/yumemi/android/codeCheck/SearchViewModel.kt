@@ -5,9 +5,6 @@ package jp.co.yumemi.android.codeCheck
 
 import android.content.Context
 import android.os.Parcelable
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.ktor.client.*
 import io.ktor.client.call.*
