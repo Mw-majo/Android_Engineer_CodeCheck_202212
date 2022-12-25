@@ -36,16 +36,15 @@ class SearchViewModel : ViewModel() {
 
         viewModelScope.launch {
             val client = HttpClient(Android)
-
             val response: HttpResponse =
                 client.get("https://api.github.com/search/repositories") {
                     header("Accept", "application/vnd.github.v3+json")
                     parameter("q", inputText)
                 }
+
             val jsonBody = JSONObject(response.receive<String>())
             val jsonItems = jsonBody.optJSONArray("items") ?: JSONArray()
             val items = mutableListOf<Item>()
-
             for (i in 0 until jsonItems.length()) {
                 val jsonItem = jsonItems.optJSONObject(i)
                 val name = jsonItem.optString("full_name")
