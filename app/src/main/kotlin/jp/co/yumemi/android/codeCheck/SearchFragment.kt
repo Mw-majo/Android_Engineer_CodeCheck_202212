@@ -20,7 +20,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         super.onViewCreated(view, savedInstanceState)
 
         val fragmentSearchBinding = FragmentSearchBinding.bind(view)
-        val searchViewModel = SearchViewModel(requireContext())
+        val searchViewModel = SearchViewModel()
         val linearLayoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), linearLayoutManager.orientation)
