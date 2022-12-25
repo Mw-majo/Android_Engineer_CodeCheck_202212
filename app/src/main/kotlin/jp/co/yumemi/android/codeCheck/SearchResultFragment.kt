@@ -36,4 +36,9 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
         binding.forksView.text = getString(R.string.forks_text, item.forksCount)
         binding.openIssuesView.text = getString(R.string.open_issues_text, item.openIssuesCount)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
