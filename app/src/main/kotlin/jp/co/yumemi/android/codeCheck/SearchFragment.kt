@@ -34,20 +34,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         )
 
         // 入力を監視するリスナーを定義
-        fragmentSearchBinding.queryEditField.setOnEditorActionListener { editText, action, _ ->
-
-            val keyword = editText.text.toString()
-
-            // 入力がないか、ボタンが押されていなければ検索を行わない
-            if (action != EditorInfo.IME_ACTION_SEARCH || keyword == "") {
-                return@setOnEditorActionListener false
+        fragmentSearchBinding.queryEditField.addTextChangedListener(
+            object : OnTextWatcher {
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    val keyword = p1.toString()
+                    searchViewModel.getSearchResults(keyword).apply {
+                        customAdapter.submitList(this)
+                    }
+                }
             }
-
-            searchViewModel.getSearchResults(keyword).apply {
-                customAdapter.submitList(this)
-            }
-            return@setOnEditorActionListener true
-        }
+        )
 
         fragmentSearchBinding.recyclerView.also {
             it.layoutManager = linearLayoutManager
