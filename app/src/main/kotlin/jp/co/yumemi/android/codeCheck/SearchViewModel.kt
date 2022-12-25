@@ -23,8 +23,8 @@ import java.util.*
 
 class SearchViewModel(val context: Context) : ViewModel() {
 
-    private var _lastSearchDate = MutableLiveData<Date>()
-    val lastSearchDate: LiveData<Date> get() = _lastSearchDate
+    private var _lastSearchDate = Date()
+    val lastSearchDate get() = _lastSearchDate
 
     // 検索結果
     fun getSearchResults(inputText: String): List<Item> = runBlocking {
@@ -67,7 +67,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
                 )
             }
 
-            _lastSearchDate.postValue(Date())
+            _lastSearchDate = Date()
 
             return@async items.toList()
         }.await()

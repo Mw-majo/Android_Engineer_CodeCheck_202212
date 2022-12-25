@@ -27,7 +27,7 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
         super.onViewCreated(view, savedInstanceState)
 
         val searchViewModel = SearchViewModel(requireContext())
-        Log.d("検索した日時", searchViewModel.lastSearchDate.value.toString())
+        Log.d("検索した日時", searchViewModel.lastSearchDate.toString())
 
         val item = args.item
         _binding = FragmentSearchResultBinding.bind(view)
