@@ -4,14 +4,12 @@
 package jp.co.yumemi.android.codeCheck
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import jp.co.yumemi.android.codeCheck.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
@@ -32,15 +30,18 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
         )
 
+        // 入力を監視するリスナーを定義
         fragmentSearchBinding.queryEditField.setOnEditorActionListener { editText, action, _ ->
-            if (action != EditorInfo.IME_ACTION_SEARCH) {
+
+            val keyword = editText.text.toString()
+
+            // 入力がないか、ボタンが押されていなければ検索を行わない
+            if (action != EditorInfo.IME_ACTION_SEARCH || keyword == "") {
                 return@setOnEditorActionListener false
             }
 
-            editText.text.toString().let {
-                searchViewModel.getSearchResults(it).apply {
-                    customAdapter.submitList(this)
-                }
+            searchViewModel.getSearchResults(keyword).apply {
+                customAdapter.submitList(this)
             }
             return@setOnEditorActionListener true
         }
