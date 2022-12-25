@@ -27,7 +27,7 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
         super.onViewCreated(view, savedInstanceState)
 
         val searchViewModel: SearchViewModel by activityViewModels()
-        Log.d("検索した日時", searchViewModel.lastSearchDate.toString())
+        Log.d("検索した日時", searchViewModel.lastSearchDate)
 
         // viewに表示されるレポジトリの詳細を設定
         val item = args.item
