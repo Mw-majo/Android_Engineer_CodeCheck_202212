@@ -5,9 +5,6 @@ package jp.co.yumemi.android.codeCheck
 
 import android.content.Context
 import android.os.Parcelable
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -21,7 +18,7 @@ import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.util.*
 
-class SearchViewModel(val context: Context) : ViewModel() {
+class SearchViewModel : ViewModel() {
 
     private var _lastSearchDate = Date()
     val lastSearchDate get() = _lastSearchDate
@@ -58,7 +55,7 @@ class SearchViewModel(val context: Context) : ViewModel() {
                     Item(
                         name = name,
                         ownerIconUrl = ownerIconUrl,
-                        language = context.getString(R.string.written_language, language),
+                        language = language,
                         stargazersCount = stargazersCount,
                         watchersCount = watchersCount,
                         forksCount = forksCount,

@@ -7,11 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
 import jp.co.yumemi.android.codeCheck.databinding.FragmentSearchResultBinding
-import java.util.*
 
 class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
 
@@ -23,17 +21,21 @@ class SearchResultFragment : Fragment(R.layout.fragment_search_result) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val searchViewModel = SearchViewModel(requireContext())
+        val searchViewModel = SearchViewModel()
         Log.d("検索した日時", searchViewModel.lastSearchDate.toString())
 
         val item = args.item
         _binding = FragmentSearchResultBinding.bind(view)
         binding.ownerIconView.load(item.ownerIconUrl)
         binding.nameView.text = item.name
-        binding.languageView.text = item.language
+        binding.languageView.text = getString(R.string.written_language, item.language)
         binding.starsView.text = getString(R.string.stars_text, item.stargazersCount)
         binding.watchersView.text = getString(R.string.watchers_text, item.watchersCount)
         binding.forksView.text = getString(R.string.forks_text, item.forksCount)
-        binding.openIssuesView.text = getString(R.string.open_issues_text, item.openIssuesCount)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
